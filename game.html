@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+<title>oyun adı altında javascript denemeleri...</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        background-color: powderblue
+    }
+</style>
+<canvas id="gameCanvas" width="1024" height="768"></canvas>
+<script>
+    var canvas;
+    var canvasContex;
+    var ballX;
+    var ballY;
+    var horizantalSpeed;
+    var verticalSpeed;
+    var paddleX;
+    var paddleWidth = 100;
+
+    window.onload = function () {
+        canvas = document.getElementById('gameCanvas');
+        canvasContex = canvas.getContext('2d');
+        ballX = (canvas.width / 2) - 5;
+        ballY = (canvas.height / 2) - 5;
+        paddleX = (canvas.width / 2) - 50;
+        horizantalSpeed = 5;
+        verticalSpeed = 5;
+        var speedPerSecond = 50;
+        var framePerSecond = 20;
+        setInterval(moveEverything, 1000 / speedPerSecond);
+        setInterval(drawEverything, 1000 / framePerSecond);
+
+        canvas.addEventListener('mousemove',
+            function (evt) {
+                var mousePos = calculateMousePosition(evt);
+                paddleX = mousePos.x;
+            }
+        );
+
+    }
+
+    function calculateMousePosition(evt) {
+        var rect = canvas.getBoundingClientRect();
+        var root = document.documentElement;
+        var mouseX = evt.clientX - rect.left - root.scrollLeft;
+        var mouseY = evt.clientY - rect.top - root.scrollTop;
+        return {
+            x: mouseX,
+            y: mouseY
+        };
+    }
+
+
+    function colorRect(leftX, topY, width, height, drawColor) {
+        canvasContex.fillStyle = drawColor;
+        canvasContex.fillRect(leftX, topY, width, height);
+    }
+
+    function colorCirc(centX, centY, radius, drawColor) {
+        canvasContex.fillStyle = drawColor;
+        canvasContex.beginPath();
+        canvasContex.arc(centX, centY, radius, 0, 2 * Math.PI);
+        canvasContex.fill();
+    }
+
+    function moveEverything() {
+        if (ballX + horizantalSpeed > canvas.width) {
+            horizantalSpeed = -horizantalSpeed;
+        }
+        if (ballY + verticalSpeed > canvas.height) {
+            verticalSpeed = -verticalSpeed;
+        }
+        if (ballX + horizantalSpeed < 0) {
+            horizantalSpeed = -horizantalSpeed;
+        }
+        if (ballY + verticalSpeed < 0) {
+            verticalSpeed = -verticalSpeed;
+        }
+        ballX = ballX + horizantalSpeed;
+        ballY = ballY + verticalSpeed;
+    }
+
+    function drawEverything() {
+        //Background is being created.
+        colorRect(0, 0, canvas.width, canvas.height, 'black');
+        //Paddle is being created.
+        colorRect(paddleX, canvas.height - 10, paddleWidth, 10, 'white');
+        //Ball is being created.
+        colorCirc(ballX, ballY, 5, 'red');
+    }
+</script>
+
+<body>
+    <br>test///
+</body>
+
+</html>
