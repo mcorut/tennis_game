@@ -33,9 +33,9 @@
         horizantalSpeed = 5;
         verticalSpeed = 5;
         var speedPerSecond = 50;
-        var framePerSecond = 20;
-        setInterval(moveEverything, 1000 / speedPerSecond);
+        var framePerSecond = 10;
         setInterval(drawEverything, 1000 / framePerSecond);
+        setInterval(moveEverything, 1000 / speedPerSecond);
 
         canvas.addEventListener('mousemove',
             function (evt) {
@@ -44,30 +44,6 @@
             }
         );
 
-    }
-
-    function calculateMousePosition(evt) {
-        var rect = canvas.getBoundingClientRect();
-        var root = document.documentElement;
-        var mouseX = evt.clientX - rect.left - root.scrollLeft - (paddleWidth / 2);
-        var mouseY = evt.clientY - rect.top - root.scrollTop;
-        return {
-            x: mouseX,
-            y: mouseY
-        };
-    }
-
-
-    function colorRect(leftX, topY, width, height, drawColor) {
-        canvasContex.fillStyle = drawColor;
-        canvasContex.fillRect(leftX, topY, width, height);
-    }
-
-    function colorCirc(centX, centY, radius, drawColor) {
-        canvasContex.fillStyle = drawColor;
-        canvasContex.beginPath();
-        canvasContex.arc(centX, centY, radius, 0, 2 * Math.PI);
-        canvasContex.fill();
     }
 
     function moveEverything() {
@@ -95,6 +71,34 @@
         //Ball is being created.
         colorCirc(ballX, ballY, 5, 'red');
     }
+
+
+
+
+    function calculateMousePosition(evt) {
+        var rect = canvas.getBoundingClientRect();
+        var root = document.documentElement;
+        var mouseX = evt.clientX - rect.left - root.scrollLeft - (paddleWidth / 2);
+        var mouseY = evt.clientY - rect.top - root.scrollTop;
+        return {
+            x: mouseX,
+            y: mouseY
+        };
+    }
+
+
+    function colorRect(leftX, topY, width, height, drawColor) {
+        canvasContex.fillStyle = drawColor;
+        canvasContex.fillRect(leftX, topY, width, height);
+    }
+
+    function colorCirc(centX, centY, radius, drawColor) {
+        canvasContex.fillStyle = drawColor;
+        canvasContex.beginPath();
+        canvasContex.arc(centX, centY, radius, 0, 2 * Math.PI);
+        canvasContex.fill();
+    }
+
 </script>
 
 <body>
